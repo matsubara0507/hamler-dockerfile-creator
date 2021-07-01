@@ -1,0 +1,32 @@
+name:                hamler-dockerfile-creator
+version:             0.1.0
+github:              "matsubara0507/hamler-dockerfile-creator"
+license:             BSD3
+author:              "MATSUBARA Nobutada"
+copyright:           "2021 MATSUBARA Nobutada"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+description:         Please see the README on GitHub at <https://github.com/matsubara0507/hamler-dockerfile-creator#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+
+library:
+  source-dirs: src
+
+executables:
+  hamler-dockerfile-creator-exe:
+    main:                Main.hs
+    source-dirs:         app
+    dependencies:
+    - hamler-dockerfile-creator
+
+tests:
+  hamler-dockerfile-creator-test:
+    main:                Spec.hs
+    source-dirs:         test
+    dependencies:
+    - hamler-dockerfile-creator
