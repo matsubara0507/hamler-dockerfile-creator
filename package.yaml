@@ -11,14 +11,27 @@ extra-source-files:
 
 description:         Please see the README on GitHub at <https://github.com/matsubara0507/hamler-dockerfile-creator#readme>
 
+ghc-options:
+- -Wall
+- -Wcompat
+- -Wincomplete-record-updates
+- -Wincomplete-uni-patterns
+- -Wredundant-constraints
+- -optP-Wno-nonportable-include-path
+
 dependencies:
 - base >= 4.7 && < 5
+- text
+- transformers
 
 library:
   source-dirs: src
+  dependencies:
+  - dockerfile-creator
+  - github
 
 executables:
-  hamler-dockerfile-creator-exe:
+  hdc:
     main:                Main.hs
     source-dirs:         app
     dependencies:
