@@ -14,52 +14,52 @@ import           GitHub                 (github')
 import qualified GitHub
 import           Language.Docker.EDSL
 
-someFunc :: IO ()
-someFunc = putStrLn "someFunc"
-
 data Config = Config
     { versionHamler :: Maybe String
     , versionOTP    :: Maybe String
     }
 
 -- | return download url for deb file
-fetchHamlerDebUrl :: MonadIO m => Config -> m (Maybe String)
-fetchHamlerDebUrl config = do
-  r <- liftIO $ case versionHamler config of
-    Nothing ->
-      github' $ GitHub.latestReleaseR "hamler-lang" "hamler"
-    Just v ->
-      github' $ GitHub.releaseByTagNameR "hamler-lang" "hamler" (fromString v)
-  case r of
-    Left _ ->
-      pure Nothing
-    Right release -> pure $ do
-      let assets = GitHub.releaseAssets release
-      asset <- List.find (isHamlerDeb . GitHub.releaseAssetName) assets
-      pure $ Text.unpack (GitHub.releaseAssetBrowserDownloadUrl asset)
+fetchHamlerDebUrl :: MonadIO m => Maybe String -> m (Maybe String)
+fetchHamlerDebUrl version = do
+  release <- fetchRelease "hamler-lang" "hamler" version
+  pure $ do
+    assets <- GitHub.releaseAssets <$> release
+    asset <- List.find (isHamlerDeb . GitHub.releaseAssetName) assets
+    pure $ Text.unpack (GitHub.releaseAssetBrowserDownloadUrl asset)
   where
     isHamlerDeb txt = "hamler_" `Text.isPrefixOf` txt && ".deb" `Text.isSuffixOf` txt
 
 -- | return version
-validateVersionOTP :: MonadIO m => Config -> m (Maybe String)
-validateVersionOTP config = liftIO $ do
-  r <- liftIO $ case versionOTP config of
+validateVersionOTP :: MonadIO m => Maybe String -> m (Maybe String)
+validateVersionOTP version = do
+  release <- fetchRelease "erlang" "otp" $ fmap (tagPrefix <>) version
+  pure $ fmap (Text.unpack . Text.drop (length tagPrefix) . GitHub.releaseTagName) release
+  where
+    tagPrefix = "OTP-"
+
+fetchRelease
+  :: MonadIO m
+  => GitHub.Name GitHub.Owner
+  -> GitHub.Name GitHub.Repo
+  -> Maybe String
+  -> m (Maybe GitHub.Release)
+fetchRelease owner repo tag = do
+  r <- liftIO $ case tag of
     Nothing ->
-      github' $ GitHub.latestReleaseR "erlang" "otp"
-    Just v ->
-      github' $ GitHub.releaseByTagNameR "erlang" "otp" (tagPrefix <> fromString v)
+      github' $ GitHub.latestReleaseR owner repo
+    Just t ->
+      github' $ GitHub.releaseByTagNameR owner repo (fromString t)
   case r of
     Left _ ->
       pure Nothing
     Right release ->
-      pure $ Just (Text.unpack $ Text.drop (Text.length tagPrefix) (GitHub.releaseTagName release))
-  where
-    tagPrefix = "OTP-"
+      pure (Just release)
 
 buildDockerfile :: MonadIO m => Config -> m (Either String L.Text)
-buildDockerfile config@Config{..} = do
-  r1 <- liftIO $ fetchHamlerDebUrl config
-  r2 <- liftIO $ validateVersionOTP config
+buildDockerfile Config{..} = do
+  r1 <- fetchHamlerDebUrl versionHamler
+  r2 <- validateVersionOTP versionOTP
   case (r1, r2) of
     (Nothing, _) ->
       pure (Left $ "hamler version is not found: " ++ fromMaybe "latest" versionHamler)
