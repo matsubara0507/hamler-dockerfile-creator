@@ -5,41 +5,22 @@
 
 packages:
 - completed:
-    hackage: github-0.26@sha256:a9d4046325c3eb28cdc7bef2c3f5bb213328caeae0b7dce6f51de655f0bffaa1,7162
+    hackage: github-0.27@sha256:2288b807a4bd97fefeff75487ef5d2ed31f0faa18f306e01e5f5cb498e228208,7033
     pantry-tree:
-      size: 7511
-      sha256: b71aab2984b268030c9e2617043575681134c1fe60dffbd5596e659c0a3e9aec
+      size: 7838
+      sha256: b4ea4bf693da78ebafc95c5800031350b1514f82ba2254b426a9342f48d2585b
   original:
-    hackage: github-0.26@sha256:a9d4046325c3eb28cdc7bef2c3f5bb213328caeae0b7dce6f51de655f0bffaa1,7162
+    hackage: github-0.27
 - completed:
-    hackage: base16-bytestring-0.1.1.7@sha256:0021256a9628971c08da95cb8f4d0d72192f3bb8a7b30b55c080562d17c43dd3,2231
+    hackage: dockerfile-creator-0.1.1.0@sha256:a80a7d2af5acb473faee5dc4d73e9e57fdde26daab2be2b3a0b1fa7f7723d8e7,2114
     pantry-tree:
-      size: 454
-      sha256: 2dc99cd67293b09204098202d0bdcdcf89d2b8c69ce6c8f4e31deadbdab2a7f9
+      size: 853
+      sha256: b691d6991b646c94a2c0fceea552587a4f632b11a348a4231b08c10146ce2332
   original:
-    hackage: base16-bytestring-0.1.1.7@sha256:0021256a9628971c08da95cb8f4d0d72192f3bb8a7b30b55c080562d17c43dd3,2231
-- completed:
-    hackage: http-link-header-1.0.3.1@sha256:9917c26635a46eff5d36c5344a4ae42fad2b5de79c0e300363bddd5eec66facd,1937
-    pantry-tree:
-      size: 990
-      sha256: 155feaf856daf5b55491048c8c4726ba765a8fe79263ebdbfc82f6c385a15715
-  original:
-    hackage: http-link-header-1.0.3.1@sha256:9917c26635a46eff5d36c5344a4ae42fad2b5de79c0e300363bddd5eec66facd,1937
-- completed:
-    size: 11482
-    url: https://github.com/matsubara0507/dockerfile-creator/archive/5f786ea52ed1b149c3bdc458e71912bb5a0ede82.tar.gz
-    name: dockerfile-creator
-    version: 0.1.0.0
-    sha256: c3b8757de9cf92eb7fc1ec4bc9300a1d9d1d1d157f2f23d10c391305bd3b431d
-    pantry-tree:
-      size: 1711
-      sha256: 72c4700f434b2da10d3fe89cd0b97db9167383de9bff651a78745aa992de41d0
-  original:
-    url: https://github.com/matsubara0507/dockerfile-creator/archive/5f786ea52ed1b149c3bdc458e71912bb5a0ede82.tar.gz
+    hackage: dockerfile-creator-0.1.1.0
 snapshots:
 - completed:
-    size: 585393
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/18/0.yaml
-    sha256: c632012da648385b9fa3c29f4e0afd56ead299f1c5528ee789058be410e883c0
-  original:
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/18/0.yaml
+    size: 587819
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/18/23.yaml
+    sha256: 7f69bb29a57495586e7e3ed31ecc59c0d2c959cb23bd52b71ca676f254c9beb1
+  original: lts-18.23
